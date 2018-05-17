@@ -1,0 +1,57 @@
+<!doctype html>
+<html class="" lang="">
+
+	<head>
+		{% include 'partials/header' %}
+	</head>
+
+		<body class="">
+
+      <section class="hero is-medium is-primary">
+        <div class="hero-body">
+             <div class="container">
+            <div class="columns">
+              <div class="column">
+
+                {% for entry in craft.entries.section('FAQs') %}
+              <h1 class = "title is-1"> FAQs & Guides </h1>
+
+
+
+
+
+              </div>
+            </div>
+
+
+
+
+        </div>
+      </div>
+      </section>
+
+<section>
+    <div class = "container">
+      <div class = "blankbreak"></div>
+      <div class = "columns">
+        <div class = "column is-9">
+              <p> {{entry.faqcontent}} </p>
+        </div>
+
+        <div class = "column is-3">
+
+        </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+      {% endfor %}
+    </body>
+{% include 'partials/footer' %}
+</html>

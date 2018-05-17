@@ -1,0 +1,418 @@
+
+<html class="" lang="">
+	<head>
+	{% include 'partials/header' %}
+
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+	  <div class="navbar-brand">
+	    <a class="navbar-item" href="{{ url('/') }}">
+
+
+	      {% set asset = navigation.mainlogo.one() %}
+	      {% if asset %}
+	     <img class = "mn7logo" src = "{{ asset.url}}">
+	    {% endif %}
+	    </a>
+
+
+			<div>
+
+				<div class="field has-addons">
+
+				<div class="control is-expanded">
+								<input class = "input  is-medium" type="search" name="q" placeholder="Search">
+								 </div>
+
+								<div class="control">
+									<input class="button is-info  is-medium" type="submit" value="Search">
+								</div>
+
+				</form>
+				</div>
+
+		</div>
+
+
+	<div class = "menu-links">
+	    <a href = "{{ url('static/faq') }}"> FAQs </a>
+	  </div>
+	  </div>
+	</nav>
+
+	</head>
+		<body class="">
+
+
+			<section class="hero">
+				<div class = "container">
+
+								  <form action="{{ url('search/results') }}" method="get">
+								 <!-- SEARCH -->
+								 <div class="columns filter">
+								 <div class="column is-1">
+
+
+										 <div class="field">
+											 <div class="control">
+											 <div class="select is-fullwidth">
+
+										 <select name="los">
+												 <option value="">All Levels</option>
+												 {% set categories = craft.categories.group('lostudy') %}
+												 {% for category in categories %}
+														 <option value="{{ category.slug }}">{{ category.title }}</option>
+												 {% endfor %}
+										 </select>
+
+									 </div>
+								 </div>
+							 </div>
+							 </div>
+
+							 <div class="column is-1">
+
+
+
+					 			 <div class="field">
+					 				 <div class="control">
+					 				 <div class="select is-fullwidth">
+					 						 <select name="location">
+					 								 <option value="">All locations</option>
+					 								 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
+					 								 {% for option in dropdownField.settings.options %}
+					 										 <option value="{{ option.label }}"> {{ option.label }} </option>
+					 										 {% endfor %}
+					 						 </select>
+
+					 				</div>
+					 			</div>
+					 		</div>
+					 	</div>
+
+								 <div class="column is-1">
+
+
+	 									<div class="field">
+
+	 										<div class="control">
+
+	 										<div class="select is-fullwidth">
+	 												<select name="plength">
+															<option value="">Program Length</option>
+															  	<option value="" </option>
+
+	 												</select>
+
+	 									 </div>
+	 								 </div>
+	 							 </div>
+						</div>
+
+
+
+						<div class="column is-1">
+
+
+								<div class="field">
+									<div class="control">
+									<div class="select is-fullwidth">
+											<select name="tuition">
+													<option value="">Tuition</option>
+													{% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
+													{% for option in dropdownField.settings.options %}
+															<option value="{{ option.label }}"> {{ option.label }} </option>
+															{% endfor %}
+											</select>
+
+								 </div>
+							 </div>
+						 </div>
+					</div>
+
+
+
+
+							<div class="column is-1">
+							 <form action="{{ url('search/results') }}" method="get">
+
+
+								 <div class="field">
+									 <div class="control">
+									 <div class="select is-fullwidth">
+											 <select name="awardtype">
+													 <option value="">Award Type</option>
+													 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
+													 {% for option in dropdownField.settings.options %}
+															 <option value="{{ option.label }}"> {{ option.label }} </option>
+															 {% endfor %}
+											 </select>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="column is-1">
+
+
+							 <div class="field">
+								 <div class="control">
+								 <div class="select is-fullwidth">
+										 <select name="language">
+												 <option value="">Language</option>
+												 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
+												 {% for option in dropdownField.settings.options %}
+														 <option value="{{ option.label }}"> {{ option.label }} </option>
+														 {% endfor %}
+										 </select>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="column is-1">
+
+
+						 <div class="field">
+							 <div class="control">
+							 <div class="select is-fullwidth">
+									 <select name="housing">
+											 <option value="">Housing</option>
+											 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
+											 {% for option in dropdownField.settings.options %}
+													 <option value="{{ option.label }}"> {{ option.label }} </option>
+													 {% endfor %}
+									 </select>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="column is-1">
+
+
+					 <div class="field">
+						 <div class="control">
+						 <div class="select is-fullwidth">
+								 <select name="monthlyallowance">
+										 <option value="">Allowance</option>
+										 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
+										 {% for option in dropdownField.settings.options %}
+												 <option value="{{ option.label }}"> {{ option.label }} </option>
+												 {% endfor %}
+								 </select>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+<div class="column is-1">
+
+
+					<input class="button is-info  is-medium" type="submit" value="Search">
+					</form>
+
+				</div>
+		</div>
+
+
+
+</div>
+</section>
+
+
+
+
+
+
+<!-------------------------------------------------------------------------------->
+
+{# Get the search data #}
+{% set locationParam = craft.app.request.getParam('location') %}
+{% set losParam = craft.app.request.getParam('los') %}
+{% set query = craft.app.request.getParam( 'q' ) %}
+
+{# Compose the relation param #}
+{% set relationParam = ['and'] %}
+
+<!-- {% if locationParam %}
+{% set location = craft.fields.getFieldbyHandle('ddlocation').first() %}
+{% set relationParam = relationParam|merge([{ targetElement: location }]) %}
+{% endif %} -->
+
+{% if losParam %}
+{% set los = craft.categories.group('lostudy').slug(losParam).one() %}
+{% set relationParam = relationParam|merge([{ targetElement: los }]) %}
+{% endif %}
+
+
+
+
+
+{# Avoid passing an array with `['and']` only #}
+{% if relationParam|length < 2 %}
+{% set relationParam = '' %}
+{% endif %}
+
+
+
+{# Find and list matching entries #}
+{% set entries = craft.entries.relatedTo(relationParam).all() %}
+
+
+
+			<!-------------------------------------------------------------------------------->
+
+
+<section>
+
+<div class = "container">
+
+
+			{% set searchTerms = query | trim | split( ' ' ) %}
+
+			{# Build an associated array w/ terms and the replacement string #}
+			{% set replace = {} %}
+			{% for term in searchTerms %}
+			{% set replace = replace | merge( { (term) : '<span>' ~ term ~ '</span>' } ) %}
+
+			{% endfor %}
+
+			{% if entries|length %}
+			<div class = "blankbreak"> </div>
+			<h1 class = "title">{{ entries|length }} awards matching '{{query}}'</h1>
+
+			{# Loop through your search results, replacing the terms for all neccessary fields..#}
+			{% for entry in entries %}
+			 <ul>
+				 	<li>
+
+						<div class="box">
+
+
+
+									<div class = "columns">
+
+													<div class = "column is-2">
+
+
+														{% if entry.university|length %}
+														{% for university in entry.university %}
+
+
+														<!--  Logo -->
+														{% set asset = university.universitylogo.one() %}
+														{% if asset %}
+														<div class = "logo image is-128x128">
+																		<img src="{{ asset.url ('unilogo') }}"/>
+														{% endif %}
+
+														{% endfor %}
+														{% endif %}
+													</div>
+													</div>
+
+													<div class = "column is-8">
+
+															<div>
+
+														<a class = "title is-4 a-color" href="{{ entry.url }}">{{ entry.title | replace( replace ) | raw }}</a>
+														{% set text %}
+															<p>{{ entry.awarddescription | replace( replace ) | raw }}</p>
+															{% endset %}
+															{{ text | chop(limit=400, unit = 'c', allowedTags="<p>", append='...') }}
+														</div>
+
+
+														<div class = "columns">
+														<div class = "column">
+																{% if entry.majorlist %}
+																	<ul>
+																	{% for row in entry.majorlist.limit(3)  %}
+
+																	<li class = "li-tag">
+
+																		<span class="tag is-info">
+
+														{{ row.major | replace( replace ) | raw }} </span>
+
+													</li>
+
+																	{% endfor %}
+																	</ul>
+																	{% endif %}
+
+																</div>
+														</div>
+
+
+														<div class = "columns">
+														<div class = "column">
+															<h3 class="title is-5"> Deadline</p>
+																<p class="subtitle is-6">{{ entry.headerinformation.deadline  | replace( replace ) | raw}}</p>
+														</div>
+
+
+
+
+												<div class = "column">
+												<h3 class="title is-5">Level of study </p>
+													<p class="subtitle is-6">{{entry.headerinformation.levelofstudy.label}} </p>
+												</div>
+
+												<div class = "column is-one-third">
+												<h3 class="title is-5">Location</p>
+												<p class="subtitle is-6">{{ entry.ddlocation.label  | replace( replace ) | raw}}</p>
+												</div>
+												</div>
+
+
+													</div>
+
+													<div class = "column is-2">
+																	<div class = "apply">	<a class = "button is-info is-fullwidth" href = "{{ entry.apply }}">  Apply </p> </a> </div>
+
+																		<div class = "more-info"><a class = "button is-fullwidth" href = "{{ entry.url }}">  More info </p> </a></div>
+
+													</div>
+
+									</div>
+
+
+
+
+
+
+
+
+
+							</div>
+
+
+			   	</li>
+
+			</ul>
+
+	<div class = "blankbreak"> </div>
+
+
+
+
+			{% endfor %}
+
+			{% else %}
+			 <p> Sorry no results </p>
+
+			{% endif %}
+
+
+</div>
+
+</section>
+
+		</body>
+		{% include 'partials/footer' %}
+</html>

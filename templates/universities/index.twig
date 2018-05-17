@@ -1,0 +1,34 @@
+<!doctype html>
+<html class="" lang="">
+	<head>
+	{% include 'partials/header' %}
+	</head>
+		<body class="">
+			<h1>{{ entry.title }}</h1>
+			<br/>
+			{% set asset = entry.image.first() %}
+			{% if asset %}
+			  <img src="{{ asset.url }}"/>
+			{% endif %}
+			<ul>
+				{% for row in entry.carousel %}
+				{% set image = row.image.first() %}
+				<li>
+			     {% if image %}
+					   <img src="{{ image.url }}"/>  {{ row.description }}
+					  {% endif %}
+				</li>
+				{% endfor %}
+			</ul>
+			<br><br>
+			{% if entry.description %}
+			<h3>Description</h3>
+			    {{ entry.description }}
+			{% endif %}
+			{{ entry.location }}<br/>
+			{{ entry.location.parts.country }}<br/>
+			{{ entry.location.lat }}
+			{{ entry.location.lng }}
+		</body>
+	{% include 'partials/footer' %}
+</html>
