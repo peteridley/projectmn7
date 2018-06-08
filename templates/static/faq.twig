@@ -3,48 +3,125 @@
 
 	<head>
 		{% include 'partials/header' %}
+
+		<section>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class ="container">
+	<div class="navbar-brand">
+
+		<a class="navbar-item" href="{{ url('/') }}">
+				{% set asset = navigation.mainlogo.one() %}
+				{% if asset %}
+				<img class = "" src = "{{ asset.url}}">
+				{% endif %}
+		</a>
+
+		<div class = "search">
+			<form action="{{ url('search/results') }}" method="get">
+
+
+			 <div class="field has-addons">
+
+						 <div class="control is-expanded">
+									<input class = "input" type="search" name="q" placeholder="Search Majors, Awards or Universities…">
+						 </div>
+
+			 </div>
+
+		</div>
+
+		<div class = "menu-wrapper">
+		<div class = "linkstyle-1">
+			<a href = "{{ url('static/faq') }}"> FAQs & Guides</a>
+			<a href = "#"> Contact </a>
+					</div>
+
+
+
+		<div class = "social-icons">
+			<a href = "#">  <img class = "facebook" src = "/images/statics/facebook-blue.png"> </a>
+			<a href = "#">  <img class = "instagram" src = "/images/statics/instagram-blue.png"> </a>
+			<a href = "#">  <img class = "twitter" src = "/images/statics/twitter-blue.png"> </a>
+		</div>
+</div>
+
+	</div>
+	</div>
+</nav>
+
+</section>
+
 	</head>
 
 		<body class="">
 
-      <section class="hero is-medium is-primary">
-        <div class="hero-body">
-             <div class="container">
-            <div class="columns">
-              <div class="column">
+	<section class="hero is-medium">
+		<div class="hero-body has-faq-img">
+			<div class="container">
+				<div class="columns">
+					<div class="column is-offset-1 is-10">
 
-                {% for entry in craft.entries.section('FAQs') %}
-              <h1 class = "title is-1"> FAQs & Guides </h1>
+						{% for entry in craft.entries.section('FAQs') %}
+						<h1 class = "title style-5 faq"> FAQs & Guides </h1>
 
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-
-
-
-              </div>
-            </div>
-
-
-
-
-        </div>
-      </div>
-      </section>
-
-<section>
-    <div class = "container">
-      <div class = "blankbreak"></div>
+<section class = "section">
+  <div class = "container">
+    <div class = "blankbreak"></div>
       <div class = "columns">
-        <div class = "column is-9">
-              <p> {{entry.faqcontent}} </p>
-        </div>
-
-        <div class = "column is-3">
-
-        </div>
+        <div class = "column is-12">
+					<div class = "columns">
+						<div class = "column is-offset-1 is-7">
+							<div class = "columns">
+								<div class = "column">
 
 
-    </div>
-  </div>
+
+								</div>
+							</div>
+
+
+
+						<div class = "columns">
+						</div class = "column">
+
+
+							{% for block in entry.faqmatrix %}
+							{% if block.type == "questions" %}
+							<div class = "question">
+							<p class = "style-1">{{ block.question }}</p>
+							</div>
+							<div class = "answer-bg">
+							{% elseif block.type == "answers" %}
+							{{ block.answer|markdown }}
+						</div>
+							{% endif %}
+
+						{% endfor %}
+
+
+						</div>
+
+
+						<div class = "column is-offset-1 is-2">
+
+							<div class = "motivation-download">		<p class = "style-3"> Motivation Letter Guide </p> <a class = "button is-info is-fullwidth" href = "{{ entry.apply }}">  Download </p> </a> </div>
+
+							<div class = "cv-download">	<p class = "style-3"> CV Writing Guide </p> <a class = "button is-info is-fullwidth" href = "{{ entry.url }}">  Download </p> </a></div>
+						</div>
+
+
+					</div>
+					</div>
+					</div>
+
+	</div>
 </section>
 
 

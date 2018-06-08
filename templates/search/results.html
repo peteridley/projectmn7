@@ -3,254 +3,326 @@
 	<head>
 	{% include 'partials/header' %}
 
+	<!----------------------------- Navigation ------------------------------------>
+
+
+	    <section>
+
 	<nav class="navbar" role="navigation" aria-label="main navigation">
+	    <div class ="container">
 	  <div class="navbar-brand">
+
 	    <a class="navbar-item" href="{{ url('/') }}">
-
-
-	      {% set asset = navigation.mainlogo.one() %}
-	      {% if asset %}
-	     <img class = "mn7logo" src = "{{ asset.url}}">
-	    {% endif %}
+	        {% set asset = navigation.mainlogo.one() %}
+	        {% if asset %}
+	        <img class = "" src = "{{ asset.url}}">
+	        {% endif %}
 	    </a>
 
-
-			<div>
-
-				<div class="field has-addons">
-
-				<div class="control is-expanded">
-								<input class = "input  is-medium" type="search" name="q" placeholder="Search">
-								 </div>
-
-								<div class="control">
-									<input class="button is-info  is-medium" type="submit" value="Search">
-								</div>
-
-				</form>
-				</div>
-
-		</div>
+			<div class = "search">
+				<form action="{{ url('search/results') }}" method="get">
 
 
-	<div class = "menu-links">
-	    <a href = "{{ url('static/faq') }}"> FAQs </a>
+				 <div class="field has-addons">
+
+							 <div class="control is-expanded top-search">
+										<input class = "input" type="search" name="q" placeholder="Search Majors, Awards or Universities…">
+							 </div>
+
+				 </div>
+
+			</div>
+
+	    <div class = "menu-wrapper">
+	    <div class = "linkstyle-1">
+	      <a href = "{{ url('static/faq') }}"> FAQs & Guides</a>
+	      <a href = "#"> Contact </a>
+	          </div>
+
+
+
+	    <div class = "social-icons">
+	      <a href = "#">  <img class = "facebook" src = "/images/statics/facebook-blue.png"> </a>
+	      <a href = "#">  <img class = "instagram" src = "/images/statics/instagram-blue.png"> </a>
+	      <a href = "#">  <img class = "twitter" src = "/images/statics/twitter-blue.png"> </a>
+	    </div>
+	</div>
+
 	  </div>
 	  </div>
 	</nav>
 
+	</section>
 	</head>
-		<body class="">
+
+	<body class="">
+
+<!-------------------------------------------------------------------------->
+	<section class="top">
+		<div class = "container">
+			<div class = "filter">
+
+				<!-- - - - - - - - - Form Start - - - - - - - - - - - - - - - - - - -->
 
 
-			<section class="hero">
-				<div class = "container">
+					 <div class="columns is-variable is-1">
+						 <div class = "columns">
+							 <div class = "column">
+								 <div class = "columns">
 
-								  <form action="{{ url('search/results') }}" method="get">
-								 <!-- SEARCH -->
-								 <div class="columns filter">
-								 <div class="column is-1">
-
-
+								 	<div class="column is-filter">
 										 <div class="field">
 											 <div class="control">
-											 <div class="select is-fullwidth">
+											 	<div class="select is-fullwidth is-multiple">
 
-										 <select name="los">
-												 <option value="">All Levels</option>
-												 {% set categories = craft.categories.group('lostudy') %}
-												 {% for category in categories %}
+												 <!-- Level of study -->
+												 <select class = "resultsselect" name="los" onchange="this.form.submit()" >
+														 <option value="">All Levels</option>
+
+														 {% set categories = craft.categories.group('lostudy') %}
+														 {% for category in categories %}
 														 <option value="{{ category.slug }}">{{ category.title }}</option>
-												 {% endfor %}
-										 </select>
+														 {% endfor %}
+												 </select>
 
+											 </div>
+										 </div>
 									 </div>
 								 </div>
-							 </div>
-							 </div>
 
-							 <div class="column is-1">
+							 <div class="column">
 
+						 			 <div class="field">
+						 				 <div class="control">
+							 				 <div class="select is-fullwidth is-multiple location">
+	 										 <!-- Location -->
+														 <select class = "resultsselect" name="location" id="sally" onchange="this.form.submit()" >
+																 <option value="">All Locations</option>
+																 {% set categories = craft.categories.group('locations') %}
+																 {% for category in categories %}
+																		 <option value="{{ category.slug }}">{{ category.title }}</option>
+																 {% endfor %}
+														 </select>
 
+							 				</div>
+						 				</div>
+						 			</div>
 
-					 			 <div class="field">
-					 				 <div class="control">
-					 				 <div class="select is-fullwidth">
-					 						 <select name="location">
-					 								 <option value="">All locations</option>
-					 								 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
-					 								 {% for option in dropdownField.settings.options %}
-					 										 <option value="{{ option.label }}"> {{ option.label }} </option>
-					 										 {% endfor %}
-					 						 </select>
-
-					 				</div>
-					 			</div>
 					 		</div>
-					 	</div>
 
-								 <div class="column is-1">
+							 <div class="column">
 
+								 <!-- Program Length-->
 
-	 									<div class="field">
+										<div class="field">
+											<div class="control">
+	 										<div class="select is-fullwidth is-multiple">
 
-	 										<div class="control">
+												<select class = "resultsselect" name="programlength" onchange="this.form.submit()">
+														<option value="">Program Length</option>
+														{% set categories = craft.categories.group('programlength') %}
+														{% for category in categories %}
+																<option value="{{ category.slug }}">{{ category.title }}</option>
+														{% endfor %}
+												</select>
+		 									 </div>
+		 								 </div>
+		 							 </div>
 
-	 										<div class="select is-fullwidth">
-	 												<select name="plength">
-															<option value="">Program Length</option>
-															  	<option value="" </option>
-
-	 												</select>
-
-	 									 </div>
-	 								 </div>
-	 							 </div>
-						</div>
-
-
-
-						<div class="column is-1">
+								</div>
 
 
-								<div class="field">
-									<div class="control">
-									<div class="select is-fullwidth">
-											<select name="tuition">
-													<option value="">Tuition</option>
-													{% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
-													{% for option in dropdownField.settings.options %}
-															<option value="{{ option.label }}"> {{ option.label }} </option>
+
+								<div class="column">
+
+									<!-- Tuition -->
+										<div class="field">
+											<div class="control">
+												<div class="select is-fullwidth is-multiple">
+
+													<select class = "resultsselect" name="tuition" onchange="this.form.submit()">
+															<option value="">Tuition</option>
+															{% set categories = craft.categories.group('tuition') %}
+															{% for category in categories %}
+																	<option value="{{ category.slug }}">{{ category.title }}</option>
 															{% endfor %}
-											</select>
+													</select>
 
-								 </div>
-							 </div>
-						 </div>
-					</div>
+											 </div>
+										 </div>
+									 </div>
+
+								</div>
 
 
 
 
-							<div class="column is-1">
-							 <form action="{{ url('search/results') }}" method="get">
+										<div class="column">
+
+									 <!-- Award Type -->
+											<div class="field">
+												<div class="control">
+												 	<div class="select is-fullwidth is-multiple">
+
+													 <select class = "resultsselect" name="awardtype" onchange="this.form.submit()">
+															 <option value="">Award Type</option>
+															 {% set categories = craft.categories.group('awardtype') %}
+															 {% for category in categories %}
+																	 <option value="{{ category.slug }}">{{ category.title }}</option>
+															 {% endfor %}
+													 </select>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="column">
+
+										<!-- Language -->
+										 <div class="field">
+											 <div class="control">
+												 <div class="select is-fullwidth is-multiple">
+
+													 <select class = "resultsselect" name="courselanguage" onchange="this.form.submit()">
+															 <option value="">Language</option>
+															 {% set categories = craft.categories.group('courselanguage') %}
+															 {% for category in categories %}
+																	 <option value="{{ category.slug }}">{{ category.title }}</option>
+															 {% endfor %}
+													 </select>
+
+												  </div>
+										  	</div>
+										 </div>
+
+								</div>
+
+								<div class="column">
+
+
+									 <div class="field">
+
+										 <div class="select is-fullwidth is-multiple">
+											 <select class = "resultsselect" name="housing" onchange="this.form.submit()">
+												 		<option value = "">Housing</option>
+													 {% set categories = craft.categories.group('housing') %}
+													 {% for category in categories %}
+															 <option value="{{ category.slug }}">{{ category.title }}</option>
+													 {% endfor %}
+											 </select>
+
+										</div>
+
+								</div>
+							</div>
+
+							<div class="column">
 
 
 								 <div class="field">
 									 <div class="control">
-									 <div class="select is-fullwidth">
-											 <select name="awardtype">
-													 <option value="">Award Type</option>
-													 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
-													 {% for option in dropdownField.settings.options %}
-															 <option value="{{ option.label }}"> {{ option.label }} </option>
-															 {% endfor %}
-											 </select>
+									 <div class="select is-fullwidth is-multiple">
+										 <select class = "resultsselect" name="monthlyallowance" onchange="this.form.submit()">
+													<option value="">Allowance</option>
+													{% set categories = craft.categories.group('monthlyallowance') %}
+													{% for category in categories %}
+															<option value="{{ category.slug }}">{{ category.title }}</option>
+													{% endfor %}
+											</select>
 
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<div class="column is-1">
+						<div class="column ">
 
 
 							 <div class="field">
-								 <div class="control">
-								 <div class="select is-fullwidth">
-										 <select name="language">
-												 <option value="">Language</option>
-												 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
-												 {% for option in dropdownField.settings.options %}
-														 <option value="{{ option.label }}"> {{ option.label }} </option>
-														 {% endfor %}
-										 </select>
 
-								</div>
-							</div>
-						</div>
-					</div>
+								 <div class="select is-fullwidth is-multiple">
+									 <select class = "clearfilter" name="" onchange="this.form.submit()">
+												<option value = "">Clear Filters</option>
 
-					<div class="column is-1">
-
-
-						 <div class="field">
-							 <div class="control">
-							 <div class="select is-fullwidth">
-									 <select name="housing">
-											 <option value="">Housing</option>
-											 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
-											 {% for option in dropdownField.settings.options %}
-													 <option value="{{ option.label }}"> {{ option.label }} </option>
-													 {% endfor %}
 									 </select>
 
-							</div>
+								</div>
+
 						</div>
 					</div>
-				</div>
-
-				<div class="column is-1">
 
 
-					 <div class="field">
-						 <div class="control">
-						 <div class="select is-fullwidth">
-								 <select name="monthlyallowance">
-										 <option value="">Allowance</option>
-										 {% set dropdownField = craft.app.fields.getFieldbyHandle('ddlocation') %}
-										 {% for option in dropdownField.settings.options %}
-												 <option value="{{ option.label }}"> {{ option.label }} </option>
-												 {% endfor %}
-								 </select>
-
-						</div>
 					</div>
 				</div>
 			</div>
+</div>
+			</form>
+<!-- - - - - - - - - Form End - - - - - - - - - - - - - - - - - - -->
 
-<div class="column is-1">
-
-
-					<input class="button is-info  is-medium" type="submit" value="Search">
-					</form>
 
 				</div>
-		</div>
+			</div>
+
+			<div class = "greybreak"></div>
+		</section>
 
 
-
-</div>
-</section>
-
-
-
-
-
-
-<!-------------------------------------------------------------------------------->
+<!-------------------- Set search parameters ------------------------------------->
 
 {# Get the search data #}
 {% set locationParam = craft.app.request.getParam('location') %}
+{% set awardParam = craft.app.request.getParam('awardtype') %}
+{% set languageParam = craft.app.request.getParam('courselanguage') %}
+{% set housingParam = craft.app.request.getParam('housing') %}
+{% set allowanceParam = craft.app.request.getParam('monthlyallowance') %}
+{% set programlengthParam = craft.app.request.getParam('programlength') %}
+{% set tuitionParam = craft.app.request.getParam('tuition') %}
 {% set losParam = craft.app.request.getParam('los') %}
 {% set query = craft.app.request.getParam( 'q' ) %}
 
 {# Compose the relation param #}
 {% set relationParam = ['and'] %}
 
-<!-- {% if locationParam %}
-{% set location = craft.fields.getFieldbyHandle('ddlocation').first() %}
+{% if locationParam %}
+{% set location = craft.categories.group('locations').slug(locationParam).one() %}
 {% set relationParam = relationParam|merge([{ targetElement: location }]) %}
-{% endif %} -->
+{% endif %}
 
 {% if losParam %}
 {% set los = craft.categories.group('lostudy').slug(losParam).one() %}
 {% set relationParam = relationParam|merge([{ targetElement: los }]) %}
 {% endif %}
 
+{% if awardParam %}
+{% set awardtype = craft.categories.group('awardtype').slug(awardParam).one() %}
+{% set relationParam = relationParam|merge([{ targetElement: awardtype }]) %}
+{% endif %}
 
+{% if languageParam %}
+{% set courselanguage = craft.categories.group('courselanguage').slug(languageParam).one() %}
+{% set relationParam = relationParam|merge([{ targetElement: courselanguage }]) %}
+{% endif %}
 
+{% if programlengthParam %}
+{% set programlength = craft.categories.group('programlength').slug(programlengthParam).one() %}
+{% set relationParam = relationParam|merge([{ targetElement: programlength }]) %}
+{% endif %}
 
+{% if allowanceParam %}
+{% set monthlyallowance = craft.categories.group('monthlyallowance').slug(allowanceParam).one() %}
+{% set relationParam = relationParam|merge([{ targetElement: monthlyallowance }]) %}
+{% endif %}
+
+{% if housingParam %}
+{% set housing = craft.categories.group('housing').slug(housingParam).one() %}
+{% set relationParam = relationParam|merge([{ targetElement: housing }]) %}
+{% endif %}
+
+{% if tuitionParam %}
+{% set tuition = craft.categories.group('tuition').slug(tuitionParam).one() %}
+{% set relationParam = relationParam|merge([{ targetElement: tuition }]) %}
+{% endif %}
 
 {# Avoid passing an array with `['and']` only #}
 {% if relationParam|length < 2 %}
@@ -262,124 +334,37 @@
 {# Find and list matching entries #}
 {% set entries = craft.entries.relatedTo(relationParam).all() %}
 
+{% paginate craft.entries.relatedTo(relationParam).limit(8) as entries  %}
 
 
-			<!-------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------->
 
 
 <section>
 
-<div class = "container">
+	<div class = "container">
+		<div class = "columns">
+			<div class = "column is-offset-1 is-10">
 
+				{% set searchTerms = query | trim | split( ' ' ) %}
 
-			{% set searchTerms = query | trim | split( ' ' ) %}
+				{# Build an associated array w/ terms and the replacement string #}
 
-			{# Build an associated array w/ terms and the replacement string #}
-			{% set replace = {} %}
-			{% for term in searchTerms %}
-			{% set replace = replace | merge( { (term) : '<span>' ~ term ~ '</span>' } ) %}
+				{% set replace = {} %}
+				{% for term in searchTerms %}
+				{% set replace = replace | merge( { (term) : '<span>' ~ term ~ '</span>' } ) %}
 
-			{% endfor %}
+				{% endfor %}
 
-			{% if entries|length %}
-			<div class = "blankbreak"> </div>
-			<h1 class = "title">{{ entries|length }} awards matching '{{query}}'</h1>
-
-			{# Loop through your search results, replacing the terms for all neccessary fields..#}
-			{% for entry in entries %}
-			 <ul>
-				 	<li>
-
-						<div class="box">
+				{% if entries|length %}
 
 
 
-									<div class = "columns">
+				<!-- Title -->
+				<h1 class = "text style-2"><strong>{{ entries |length }}</strong> results for <strong>{{query}}</strong> in <strong>{{locationParam}} </strong></h1>
 
-													<div class = "column is-2">
-
-
-														{% if entry.university|length %}
-														{% for university in entry.university %}
-
-
-														<!--  Logo -->
-														{% set asset = university.universitylogo.one() %}
-														{% if asset %}
-														<div class = "logo image is-128x128">
-																		<img src="{{ asset.url ('unilogo') }}"/>
-														{% endif %}
-
-														{% endfor %}
-														{% endif %}
-													</div>
-													</div>
-
-													<div class = "column is-8">
-
-															<div>
-
-														<a class = "title is-4 a-color" href="{{ entry.url }}">{{ entry.title | replace( replace ) | raw }}</a>
-														{% set text %}
-															<p>{{ entry.awarddescription | replace( replace ) | raw }}</p>
-															{% endset %}
-															{{ text | chop(limit=400, unit = 'c', allowedTags="<p>", append='...') }}
-														</div>
-
-
-														<div class = "columns">
-														<div class = "column">
-																{% if entry.majorlist %}
-																	<ul>
-																	{% for row in entry.majorlist.limit(3)  %}
-
-																	<li class = "li-tag">
-
-																		<span class="tag is-info">
-
-														{{ row.major | replace( replace ) | raw }} </span>
-
-													</li>
-
-																	{% endfor %}
-																	</ul>
-																	{% endif %}
-
-																</div>
-														</div>
-
-
-														<div class = "columns">
-														<div class = "column">
-															<h3 class="title is-5"> Deadline</p>
-																<p class="subtitle is-6">{{ entry.headerinformation.deadline  | replace( replace ) | raw}}</p>
-														</div>
-
-
-
-
-												<div class = "column">
-												<h3 class="title is-5">Level of study </p>
-													<p class="subtitle is-6">{{entry.headerinformation.levelofstudy.label}} </p>
-												</div>
-
-												<div class = "column is-one-third">
-												<h3 class="title is-5">Location</p>
-												<p class="subtitle is-6">{{ entry.ddlocation.label  | replace( replace ) | raw}}</p>
-												</div>
-												</div>
-
-
-													</div>
-
-													<div class = "column is-2">
-																	<div class = "apply">	<a class = "button is-info is-fullwidth" href = "{{ entry.apply }}">  Apply </p> </a> </div>
-
-																		<div class = "more-info"><a class = "button is-fullwidth" href = "{{ entry.url }}">  More info </p> </a></div>
-
-													</div>
-
-									</div>
+				<div class = "blankbreak"> </div>
+				<!-- Pagination -->
 
 
 
@@ -388,30 +373,153 @@
 
 
 
+				<nav class="pagination is-small" role="navigation" aria-label="pagination">
+					<a class="pagination-previous">Previous</a>
+					<a class="pagination-next">Next page</a>
 
-							</div>
+					<ul class="pagination-list">
+
+						{% for page, url in paginate.getPrevUrls(5) %}
+								<li><a  class = "pagination-link" href="{{ url }}">{{ page }}</a>
+						{% endfor %}
+
+						<span class="pagination-link">{{ paginate.currentPage }}</span>
+
+						{% for page, url in paginate.getNextUrls(5) %}
+							<li><a  class = "pagination-link" href="{{ url }}">{{ page }}</a>
+						{% endfor %}
+
+					</ul>
+				</nav>
+
+				<div class = "bluebreak"> </div>
+				{# Loop through your search results, replacing the terms for all neccessary fields..#}
+
+		</div>
+	</div>
+
+<!-------------------------- Card ------------------------------------------------>
 
 
-			   	</li>
-
-			</ul>
-
-	<div class = "blankbreak"> </div>
+	{% for entry in entries if entry.type == "awards" %}
 
 
+	<div class = "columns">
+		<div class = "column is offset-1 is 10">
+
+			<div class = "columns">
+		<!--  University Logo -->
+		<div class = "column is-offset-1 is-2">
+
+			{% if entry.university|length %}
+			{% for university in entry.university %}
+
+			{% set asset = university.universitylogo.one() %}
+			{% if asset %}
+
+			<div class = "logo2 image is-128x128">
+				<img src="{{ asset.url ('unilogo') }}"/>
+				{% endif %}
+
+			</div>
+
+		</div>
+
+		<!-- Scholarship Title -->
+		<div class = "column  is-5">
+			<div>
+				<a class = "linkstyle-2" href="{{ entry.url }}">{{ entry.title | replace( replace ) | raw }}</a>
+				{% set text %}
+				<p>  provided by {{university.title}} </p>
+				<p class = "awarddescription">{{ entry.awarddescription | replace( replace ) | raw }}</p>
+
+				{% endset %}
+				{{ text | chop(limit=200, unit = 'c', allowedTags="<p>", append='...') }}
+			</div>
+
+		</div>
+
+		{% endfor %}
+		{% endif %}
+		<div class = "column is-offset-1 is-2">
+			<div class = "apply">	<a class = "button is-info is-fullwidth" href = "{{ entry.apply }}">  Apply </p> </a> </div>
+			<div class = "more-info"><a class = "button is-outlined is-fullwidth" href = "{{ entry.url }}">  More Details </p> </a></div>
+		</div>
+
+	</div>
 
 
-			{% endfor %}
+<div class = "columns">
+	<div class = "column is-offset-3 is-6">
+		<div class = "columns">
 
-			{% else %}
-			 <p> Sorry no results </p>
+	<!-- Deadline -->
+	<div class = "column divider">
+	<h3 class="text style-3"> Deadline</h3>
+	<p class = "text style-4">{{ entry.headerinformation.deadline }}</p>
+</div>
 
-			{% endif %}
-
+<!-- Level of study -->
+<div class = "column divider">
+	<h3 class="text style-3">Level of study </h3>
+	<p class="text style-4"></p>
 
 </div>
 
+<!-- Location -->
+<div class = "column">
+	<h3 class="text style-3">Location</h3>
+	{% set categories = craft.categories.group('location') %}
+	{% for category in categories %}
+	<p class="text style-4">{{ location.title }}</p>
+ 	{% endfor %}
+</div>
+</div>
+
+</div>
+
+</div>
+		<div class = "columns">
+			<div class = "column is-offset-1 is-10">
+					<div class = "bluebreak"> </div>
+
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+
+
+
+	<!------------------------------------------------------------------------------>
+
+
+	{% endfor %}
+<div class = "blankbreak"> </div>
+<div class = "blankbreak"> </div>
+</div>
+
+	{% else %}
+
+<div class = "sorry">
+<h1 class = "text style-1">  Sorry no results </h1>
+	<div class = "linkstyle-1">	<a href="javascript:history.back()"> 	<span class="icon"> <i class="fa fa-angle-left"></i></span> Search again</a>	</div>
+</div>
+{% endif %}
+
 </section>
+
+
+
+
+
+
+
+
+
+
 
 		</body>
 		{% include 'partials/footer' %}

@@ -3,94 +3,128 @@
 
 	<head>
 		{% include 'partials/header' %}
+
+
+		<!----------------------------- Navigation ------------------------------------>
+
+
+
+		<nav class="navbar" role="navigation" aria-label="main navigation">
+		    <div class ="container">
+
+		  <div class="navbar-brand">
+
+		    <a class="navbar-item" href="{{ url('/') }}">
+		        {% set asset = navigation.mainlogo.one() %}
+		        {% if asset %}
+		        <img class = "mn7logo" src = "{{ asset.url}}">
+		        {% endif %}
+		    </a>
+
+		    <div class = "menu-wrapper">
+		    <div class = "linkstyle-1">
+		      <a href = "{{ url('static/faq') }}"> FAQs & Guides</a>
+		      <a href = "#"> Contact </a>
+		          </div>
+		    <div class = "social-icons">
+		      <a href = "#">  <img class = "facebook" src = "/images/statics/facebook-blue.png"> </a>
+		      <a href = "#">  <img class = "instagram" src = "/images/statics/instagram-blue.png"> </a>
+		      <a href = "#">  <img class = "twitter" src = "/images/statics/twitter-blue.png"> </a>
+		    </div>
+		</div>
+
+		  </div>
+		  </div>
+		</nav>
+
+
 	</head>
 
 		<body class="">
 
-			<section class="hero is-medium is-primary">
+			<section class="hero is-medium has-bg-img">
 			  <div class="hero-body">
 					   <div class="container">
-						<div class="columns">
-							<div class="column">
-
-								{% for entry in craft.entries.section('homepage') %}
-							<h1 class = "title is-1"> {{ entry.herotext}} </h1>
-							<div class = "blankbreak"></div>
-										{% endfor %}
-							</div>
-						</div>
+							 <div class = "columns">
+								 <div class = "column is-offset-1 is-10">
+										<div class="columns">
+											<div class="column is-10 is-offset-2">
+											</div>
+										</div>
 
 
 
 						<!-- SEARCH -->
-							<div class="columns clmbg">
 
-								 <div class="column is-7 ">
+
+						<div class = "columns">
+							<div class = "column">
+								<h1 class = "title style-5">			There's a world of education out there  </h1>
+
+								<h1 class = "text style-5">				Find it, use it, go further </h1>
+
+									<div class = "blankbreak"></div>
+							<div class="columns clmbg is-variable is-1">
+
+								 <div class="column is-4 ">
 									<form action="{{ url('search/results') }}" method="get">
 
 
 									 <div class="field has-addons">
 
-									 <div class="control is-expanded">
-													 <input class = "input" type="search" name="q" placeholder="Search Majors, Awards or Universities…">
-														</div>
-
-
-
-
+										 		 <div class="control is-expanded">
+													   	<input class = "input" type="search" name="q" placeholder="Search Majors, Awards or Universities…">
+												 </div>
 
 									 </div>
 
-
-
 							 </div>
 
-								 <div class="column is-2">
+							 <div class="column is-3">
 
 									 <div class="field">
 										 <div class="control">
-										 <div class="select">
+										 	<div class="select is-fullwidth is-multiple">
+
 												 <select name="location">
+
 														 <option value="">All Locations</option>
-														 {% set dropdownField = craft.fields.getFieldbyHandle('ddlocation') %}
-														 {% for option in dropdownField.settings.options %}
-																 <option value="{{ option.label }}"> {{ option.label }} </option>
-																 {% endfor %}
+
+														 {% set categories = craft.categories.group('locations') %}
+															{% for category in categories %}
+														 <option value="{{ category.slug }}"> {{ category.title }} </option>
+														 {% endfor %}
 												 </select>
 
+											 </div>
 										</div>
 									</div>
-								</div>
+
+							</div>
 
 
 
-						</div>
+							<div class="column is-3">
+											<div class="field ">
+									 				<div class="control">
+									 						 <div class="select is-fullwidth is-multiple">
 
+											 					 <select name="los">
+											 							 <option value="">All Levels</option>
+											 							 {% set categories = craft.categories.group('lostudy') %}
+											 							 {% for category in categories %}
+											 									 <option value="{{ category.slug }}">{{ category.title }}</option>
+											 							 {% endfor %}
+											 					 </select>
 
-
-						<div class="column is-2">
-
-
-							<div class="field ">
-	 						 <div class="control">
-	 						 <div class="select is-fullwidth">
-
-	 					 <select name="los">
-	 							 <option value="">All Levels</option>
-	 							 {% set categories = craft.categories.group('lostudy') %}
-	 							 {% for category in categories %}
-	 									 <option value="{{ category.slug }}">{{ category.title }}</option>
-	 							 {% endfor %}
-	 					 </select>
-
-	 				 </div>
-	 			 </div>
-	 		 </div>
+									 				 </div>
+									 			 </div>
+									 		 </div>
 
 						</div>
 
 
-							<div class = "column is-1">
+							<div class = "column is-2">
 											 <input class="button is-warning is-fullwidth" type="submit" value="Search">
 										 </div>
 
@@ -101,136 +135,147 @@
 
 			 </form>
 			  </div>
+			</div>
+			</div>
+		</div>
+	</div>
 			</section>
 
 
 
 
-			<section class="section">
-				<div class="container">
+<section class="section">
+			<div class="container">
+				<div class = "columns">
+					<div class = "column is-offset-1 is-10">
+
+
 
 			<!-- Featured -->
-			<h1 class = "title">Featured Awards</h1>
+			<h1 class = "text style-1">Featured Awards</h1>
 			{# Fetch all of the entries related to this category #}
-			{% set entries = craft.entries.section('award').search('featured:"1"').limit(4) %}
+			{% set entries = craft.entries.section('award').search('featured:"1"').limit(3) %}
 
 
 
 			{# Output them #}
-			{% for entry in entries %}
-			<ul class = "lihorizontal">
-					<div class = "columns">
-						<a href="{{ entry.url }}">
-				<li>
-					<div class = "column">
-						<div class="card custom">
-
-							<div class="card-image">
-									<figure class="image is-square">
+				<div class = "columns">
+				{% for entry in entries %}
 
 
-
-										{% if entry.university|length %}
-										{% for university in entry.university %}
-										<!--  Carousel -->
-
-
-											{% for row in university.carousel %}
-											{% set image = row.image.first() %}
-												{% if image %}
-
-									  	<img src="{{ image.url ('featimage') }}"/>
-
-												{% endif %}
-
-											{% endfor %}
-
-										{% endfor %}
-									{% endif %}
+								<div class = "column">
+											<div class = "columns">
+													<a href="{{ entry.url }}">
 
 
+															<div class = "column is-1-third">
+																<div class="card custom">
+
+																	<div class="card-image">
+																		<figure class="image is-square">
+
+																			{% if entry.university|length %}
+																			{% for university in entry.university %}
+																			<!--  Carousel -->
 
 
-								</figure>
-							</div>
+																			{% for row in university.carousel %}
+																			{% set image = row.image.first() %}
+																			{% if image %}
+
+											  						<img src="{{ image.url ('featimage') }}"/>
+
+																		{% endif %}
+																		{% endfor %}
+
+																		{% endfor %}
+																		{% endif %}
+
+																	</figure>
+																</div>
+
+																<div class="card-content">
+																	<div class="content">
+																		<div class = "columns">
+																			<div class = "column home-cards">
+
+					 														<a class = "text style-7" href="{{ entry.url }}"> {{ entry.title }}</a>
+																			{% if entry.university|length %}
+																			{% for university in entry.university %}
+																			<p>{{ university.title }}</p>
+																			{% endfor %}
+																			{% endif %}
+
+																			</div>
+																		</div>
+
+																			<div class = "columns">
+																			<div class = "column">
+
+																				<a class = "button more-details" href = "{{ entry.url }}">  More Details </p> </a>
+
+
+																			</div>
+																			</div>
+
+																		</div>
+												  			</div>
+															</div>
+
+										 			</div>
+
+									 	</div>
+								 	</div>
+
+								</a>
 
 
 
 
-							<div class="card-content">
-								<div class="content">
-
-									<div class = "columns">
-										<div class = "column">
-
-					 				<a href="{{ entry.url }}"> {{ entry.title }}</a>
-								</div>
-								</div>
 
 
-									<div class = "country-info">
-										<div class = "columns">
-											<div class = "column">
-										<div>
-													{% if entry.university|length %}
-												{% for university in entry.university %}
 
-												<p>{{ university.title }}</p>
-												{% endfor %}
-												{% endif %}
 
-										</div>
+					{% endfor %}
+</div>
+			</div>
+		</div>
+	</div>
 
-													<p class="subtitle is-7">{{ entry.ddlocation.label}}</p>
-												<a class = "button" href = "{{ entry.url }}">  More Details </p> </a>
-											</div>
-											</div>
-								</div>
-							</div>
-							</div>
+</div>
+</div>
+</div>
+<div class = "blankbreak"> </div>
+	</section>
+
+<div class = "blankbreak"> </div>
+	<section class = "section">
+	<div class = "container">
+		<div class = "columns">
+			<div class = "column is-offset-1">
+				<div class="columns">
+
+					<div class = "column is-5 visionidentity">
+								<h1 class = "text style-1"> Our Vision </h1>
+									{% for entry in craft.entries.section('homepage') %}
+								<p> {{ entry.visionidentity}} </p>
+					</div>
+
+					<div class = "column is-6">
+
+						{% set image = entry.aboutimage.first() %}
+						<img class = "aboutimage" src='{{image.getUrl()}}' />
+						{% endfor %}
 
 					</div>
 
-
-
 				</div>
-			</a>
-				</li>
-			</div>
-
-			</ul>
-			{% endfor %}
-</div>
-</section>
-
-
-
-
-<section>
-	<div class = "container">
-	<div class="columns">
-		<div class = "column is-6">
-			<h1 class = "title"> Vision & Identity </h1>
-				{% for entry in craft.entries.section('homepage') %}
-			<p> {{ entry.visionidentity}} </p>
-
-
-
-</div>
-
-			<div class = "column is-8">
-
-
-
-			{% set image = entry.aboutimage.first() %}
-			<img src='{{image.getUrl()}}' />
-	{% endfor %}
-
-			</div>
-
+	</div>
 </div>
 </div>
-</section>
-				</body>
+<div class = "blankbreak"> </div>
+	</section>
+
+	</body>
 		{% include 'partials/footer' %}
 </html>

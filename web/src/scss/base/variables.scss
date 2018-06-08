@@ -1,1 +1,12 @@
-$bg: #fff;
+// 1. Import the initial variables
+@import "../../vendors/bulma/sass/utilities/initial-variables";
+@import "../../vendors/bulma/sass/utilities/functions";
+
+
+$white:#FFFFFF;
+$blue: #0AAAB1;
+$teal: #0B7694;
+$lightgrey:#DEDEDE;
+$yellow: #F9B233;
+$darkgrey:#565656;
+$red:#E43724;

@@ -2,111 +2,208 @@
 <html class="" lang="">
 	<head>
 		{% include 'partials/header' %}
-	</head>
 
-<body class="">
-
-<section class = "hero is-medium is-primary">
-	<div class="hero-body">
-		<div class = "container">
-			<div class = "columns">
-				<div class = "column is-four-fifths">
+		{% if entry.university|length %}
+		{% for university in entry.university %}
 
 
-						<!-- Breadcrumb -->
-						<nav class="breadcrumb" aria-label="breadcrumbs">
-						 	<ul>
-								<li class = "back subtitle is-5">	<a href="javascript:history.back()"> 	<span class="icon"> <i class="fa fa-angle-left"></i></span> Back to results</a>	</li>
-						 	</ul>
-					 	</nav>
+						{% for row in university.carousel %}
+						{% set image = row.image.first() %}
 
-						<!-- Title -->
-						<h1 class = "title is-1">{{ entry.title }}</h1>
+						<style type="text/css">
+							.hero-image {
+								background-image: url('{{ image.url({ width: 600 }) }}') no-repeat center center ;
+								-moz-background-size: cover;
+								-o-background-size: cover;
+								background-size: cover;
+								height:500px;
+								margin-bottom:200px!important;
 
-						{% if entry.university|length %}
-						{% for university in entry.university %}
+							}
 
-						<!-- University Title -->
-				<h2 class = "subtitle is-3">{{ university.title }}</h2>
+							@media (min-width: 600px) {
+								.hero-image {
+									background-image: url('{{ image.url({ width: 1000 }) }}') no-repeat center center ;
+									-moz-background-size: cover;
+									-o-background-size: cover;
+									background-size: cover;
+								}
+							}
 
-						<!--  Show Featured -->
-						{% if entry.featured=="1" %}
-						<span class="tag is-warning"> Featured University </span>
-						{% endif %}
-
-
-
-
-						<div class = "blankbreak"> </div>
-
-
-
-				</div>
-
-
-
-<!-------------------------------------------------------------------------------->
-
-				<div class = "column is-one-fifth">
-
-						<!--  Logo -->
-						{% set asset = university.universitylogo.first() %}
-						{% if asset %}
-							<div class = "logo image is-128x128">	  <img class = "logo" src="{{ asset.url ('unilogo') }}"/> </div>
-						{% endif %}
+							@media (min-width: 1000px) {
+								.hero-image {
+									background-image: url('{{ image.url({ width: 1400 }) }}');
+									-webkit-background-size: cover;
+									-moz-background-size: cover;
+									-o-background-size: cover;
+									background-size: cover;
+								}
+							}
+						</style>
 
 						{% endfor %}
-						{% endif %}
+
+		<!----------------------------- Navigation ------------------------------------>
+
+
+
+					<section>
+
+			<nav class="navbar" role="navigation" aria-label="main navigation">
+					<div class ="container">
+				<div class="navbar-brand">
+
+					<a class="navbar-item" href="{{ url('/') }}">
+							{% set asset = navigation.mainlogo.one() %}
+							{% if asset %}
+							<img class = "" src = "{{ asset.url}}">
+							{% endif %}
+					</a>
+
+					<div class = "search">
+						<form action="{{ url('search/results') }}" method="get">
+
+
+						 <div class="field has-addons">
+
+									 <div class="control is-expanded top-search">
+												<input class = "input" type="search" name="q" placeholder="Search Majors, Awards or Universities…">
+									 </div>
+
+						 </div>
+
+					</div>
+
+					<div class = "menu-wrapper">
+					<div class = "linkstyle-1">
+						<a href = "{{ url('static/faq') }}"> FAQs & Guides</a>
+						<a href = "#"> Contact </a>
+								</div>
+
+
+
+					<div class = "social-icons">
+						<a href = "#">  <img class = "facebook" src = "/images/statics/facebook-blue.png"> </a>
+						<a href = "#">  <img class = "instagram" src = "/images/statics/instagram-blue.png"> </a>
+						<a href = "#">  <img class = "twitter" src = "/images/statics/twitter-blue.png"> </a>
+					</div>
+			</div>
 
 				</div>
+				</div>
+			</nav>
+
+			</section>
+	</head>
+
+	<body class="">
+
+
+
+<section>
+	<div class = "hero-image">
+		<div class = "container">
+			<div class = "columns">
+				<div class = "column is-12 header-information">
+
+					<div class = "columns">
+						<div class = "column is-offset-1 is-10">
+							<!-- Breadcrumb -->
+							<div class = "linkstyle-1">	<a href="javascript:history.back()"> 	<span class="icon"> <i class="fa fa-angle-left"></i></span> Back to Results</a>	</div>
+						</div>
+					</div>
+
+					<div class = "columns">
+
+						<div class = "column is-offset-1 is-narrow">
+							<!-- University Logo -->
+							{% set asset = university.universitylogo.first() %}
+							{% if asset %}
+								<div class = "logo image is-128x128">	  <img class = "logo" src="{{ asset.url ('unilogo') }}"/> </div>
+							{% endif %}
+						</div>
+
+						<div class = "column is-7">
+							<!-- Title -->
+							<h1 class = "text style-1">{{ entry.title }}</h1>
+							<!-- University Title -->
+							<h2 class = "text style-2">{{ university.title }}</h2>
+							<!--  Show Featured -->
+							<!-- {% if entry.featured=="1" %}
+							<span class="tag is-warning"> Featured University </span>
+							{% endif %} -->
+
+						</div>
+
+						<div class = "column is-2 section">
+							<div class = "apply-award"><a class = "button is-info is-fullwidth" href = "{{ entry.apply }}">  Apply </p> </a></div>
+							<div class = "more-info"><a class = "button is-outlined is-fullwidth" href = "{{ entry.url }}">  View Website </p> </a></div>
+						</div>
+
+					</div>
+					<div class = "blankbreak"></div>
+					<div class = "columns">
+						<div class = "column is-offset-1 is-8">
+							<div class = "columns">
+
+									<!-- Header Information -->
+									{% if entry.headerinformation %}
+
+
+									<!-- Deadline -->
+									<div class = "column divider">
+											<h3 class = "text style-3">Deadline</h3>
+											<p class = "text style-4">{{ entry.headerinformation.deadline }}</p>
+									</div>
+
+
+									<!-- Award Type -->
+									<div class = "column divider">
+											<h3 class = "text style-3">Award Type</h3>
+											<p class = "text style-4">{{ entry.headerinformation.award.label }}</p>
+									</div>
+
+
+									<!-- Level of study -->
+									<div class = "column divider">
+											<h3 class = "text style-3">Level of study</h3>
+											<p class = "text style-4"> {{ entry.headerinformation.levelofstudy.label }}</p>
+									</div>
+
+
+									<!-- Location -->
+									<div class = "column">
+											<h3 class = "text style-3">Location</h3>
+											<p class = "text style-4"> {{ entry.ddlocation }}</p>
+									</div>
+
+
+								{% endif %}
+
+							</div>
+
+						</div>
+					</div>
+
+
+
+		{% endfor %}
+		{% endif %}
+
+			</div>
 		</div>
-
-	<div class = "columns">
-<div class = "column is-one-fifth">
-{% if entry.headerinformation %}
-<h3 class = "subtitle is-4">Deadline</h3>
- <p>{{ entry.headerinformation.deadline }}</p>
-
-</div>
-<div class = "column is-one-fifth">
-	<h3 class = "subtitle is-4">Award Type</h3>
- 	<p>{{ entry.headerinformation.award.label }}</p>
-</div>
-<div class = "column is-one-fifth">
-
-						<h3 class = "subtitle is-4">Level of study</h3>
-					<p> {{ entry.headerinformation.levelofstudy.label }}</p>
-				</div>
-<div class = "column is-one-fifth">
-	<h3 class = "subtitle is-4">Location</h3>
-	<p> {{ entry.ddlocation.label }}</p>
-</div>
-<div class = "column is-one-fifth">
-<div class = "apply-award"><a class = "button is-info" href = "{{ entry.apply }}">  Apply </p> </a></div>
-</div>
-
 	</div>
-
-					{% endif %}
-
-</div>
-</div>
 </section>
 
-<div class = "blankbreak"></div>
+
 <!-------------------------------------------------------------------------------->
-
 <!-- Description -->
-<section>
+	<section class = "section">
 
-	<div class = "container ">
+	<div class = "container">
 		<div class = "columns">
-			<div class = "column">
-
-
-
-				<!-- Description -->
-				<h1 class = "title"> Description </h1>
+			<div class = "column is-offset-1 is-8">
+				<h1 class = "text style-1"> Description </h1>
 				<p>{{ entry.awarddescription}}</p>
 
 			</div>
@@ -115,227 +212,295 @@
 
 </section>
 
-<section>
-	<div class = "container">
-		<div class = "columns">
-			<div class = "column">
-	{% if entry.university|length %}
-	{% for university in entry.university %}
-	<!--  Carousel -->
 
-	<ul>
-		{% for row in university.carousel %}
-		{% set image = row.image.first() %}
-		<li>
-			{% if image %}
-			<figure class="image is-3by1">
-  	<img src="{{ image.url ('carouseltransform') }}"/>
-			</figure>
-
-			</br>  {{ row.description }}
-			{% endif %}
-		</li>
-		{% endfor %}
-	</ul>
-	{% endfor %}
-{% endif %}
-</div>
-</div>
-</div>
-</section>
 <!-------------------------------------------------------------------------------->
 
-<div class = "blankbreak"></div>
-<!-- Majors -->
-<section>
+
+<!---- Carousel ---->
+
+<section class = "section">
 	<div class = "container">
 		<div class = "columns">
-			<div class = "column">
-				<h1 class = "title"> Majors offered by {{ entry.title}} </h1>
-				<div class = "blankbreak"></div>
-			</div>
-		</div>
+			<div class = "column is-offset-1 is-8">
+{% if entry.university|length %}
+{% for university in entry.university %}
 
-		<div class = "columns">
-			<div class = "column is-6">
-				{% if entry.majorlist %}
+			<ul>
+				{% for row in university.carousel %}
+				{% set image = row.image.first() %}
+				<li>
+					{% if image %}
+						<figure class="image is-3by1">
+							<img src="{{ image.url ('carouseltransform') }}"/>
+						</figure>
 
-				<ul class = "major-split">
+					</br>  {{ row.description }}
+					{% endif %}
+				</li>
+				{% endfor %}
+			</ul>
 
-        {% for row in entry.majorlist %}
-            <li class = "major"><b>{{ row.major }}</b></li>
-        {% endfor %}
-    		</ul>
-
+				{% endfor %}
 				{% endif %}
 
+					<!-- break -->
+					<div class = "bluebreak"></div>
 			</div>
-
 		</div>
-	<div class = "break"></div>
 	</div>
-
 </section>
 
+<!-- Majors -->
 
-<!-------------------------------------------------------------------------------->
-<!-- Additional information -->
+<section class = "section">
+		<div class = "container">
+				<div class = "columns">
+						<div class = "column is-offset-1 is-6">
+							<h1 class = "text style-1"> Majors offered by {{ entry.title}} </h1>
 
-<section>
+						</div>
+				</div>
+
+			<div class = "columns">
+				<div class = "column is-offset-1 is-8">
+					{% if entry.majorlist %}
+
+					<ul class = "major-split">
+	        		{% for row in entry.majorlist %}
+	            <li class = "major">{{ row.major }}</li>
+	        		{% endfor %}
+	    		</ul>
+
+					{% endif %}
+				</div>
+				<!-- break -->
+
+			</div>
+
+
+
+		</div>
+
+</section>
+<div class = "container">
+<div class = "columns">
+	<div class = "column is-offset-1 is-8">
+			<div class = "bluebreak"></div>
+		</div>
+	</div>
+</div>
+<!------------------------ Additional Information --------------------------------------->
+
+
+<section class = "section">
 	<div class = "container">
-
 						<div class = "columns">
-							<div class = "column">
-
-								<h1 class = "title"> Additional information </h1>
-
+							<!-- Title -->
+							<div class = "column is-offset-1 is-8">
+								<h1 class = "text style-1"> Additional Information </h1>
 							</div>
 						</div>
 
 
 						<div class = "columns">
+							<div class = "column is-offset-1 is-8">
+								<div class = "columns">
+								<!-- Program Length -->
 								<div class = "column">
 								{% if entry.additionalinformation1 %}
-							<h3 class = "subtitle is-5">Program length</h3>
-								<p>{{ entry.additionalinformation1.programlength }}</p>
-							</div>
-
-							<div class = "column">
-								<h3 class = "subtitle is-5">Language</h3>
-					 			<p>{{ entry.additionalinformation1.language.label }}</p>
-							</div>
-
-							<div class = "column">
-								<h3 class = "subtitle is-5">Spots available</h3>
-					 			<p>{{ entry.additionalinformation1.spotsavailable }}</p>
-							</div>
-
-							<div class = "column">
-								<h3 class = "subtitle is-5">Tuition</h3>
-		 						<p>{{ entry.additionalinformation1.tuition }}</p>
-								{% endif %}
-							</div>
-						</div>
-
-						<div class = "columns">
-							<div class = "column">
-								{% if entry.additionalinformation2 %}
-								<h3 class = "subtitle is-5">Airfare</h3>
-							<p>	{{ entry.additionalinformation2.airfare.label }}</p>
-							</div>
-
-							<div class = "column">
-
-								<h3 class = "subtitle is-5">Monthly allowance</h3>
-								<p>{{ entry.additionalinformation2.monthlyallowance.label }}</p>
-
-							</div>
-
-							<div class = "column">
-								<h3 class = "subtitle is-5">Textbooks</h3>
-							<p>	{{ entry.additionalinformation2.textbooks.label }}</p>
+									<h3 class = "text style-3">Program length</h3>
+									<p class = "text style-4">{{ entry.additionalinformation1.programlength }}</p>
 								</div>
 
-							<div class = "column">
-								<h3 class = "subtitle is-5">Housing</h3>
-								<p>{{ entry.additionalinformation2.housing.label }}</p>
-								{% endif %}
-							</div>
+								<!-- Language -->
+								<div class = "column">
+									<h3 class = "text style-3">Language</h3>
+						 			<p class = "text style-4">{{ entry.additionalinformation1.language.label }}</p>
+								</div>
 
+								<!-- Spots available -->
+								<div class = "column">
+									<h3 class = "text style-3">Spots available</h3>
+						 			<p class = "text style-4">{{ entry.additionalinformation1.spotsavailable }}</p>
+								</div>
+
+								<!-- Tuition -->
+								<div class = "column">
+									<h3 class = "text style-3">Tuition</h3>
+			 						<p class = "text style-4">{{ entry.additionalinformation1.tuition }}</p>
+									{% endif %}
+								</div>
+							</div>
+						</div>
 						</div>
 
 
-</div>
+						<div class = "columns">
+							<div class = "column is-offset-1 is-8">
+								<div class = "columns">
+
+									<!-- Textbooks -->
+									<div class = "column">
+											{% if entry.additionalinformation2 %}
+										<h3 class = "text style-3">Textbooks</h3>
+										<p class = "text style-4">	{{ entry.additionalinformation2.textbooks.label }}</p>
+									</div>
+
+									<!-- Housing -->
+									<div class = "column">
+										<h3 class = "text style-3">Housing</h3>
+										<p class = "text style-4">{{ entry.additionalinformation2.housing.label }}</p>
+
+									</div>
 
 
+								<!-- Airfare -->
+								<div class = "column">
+
+										<h3 class = "text style-3">Airfare</h3>
+										<p class = "text style-4">	{{ entry.additionalinformation2.airfare.label }}</p>
+								</div>
+
+								<!-- Monthly allowance -->
+								<div class = "column">
+									<h3 class = "text style-3">Monthly allowance</h3>
+									<p class = "text style-4">{{ entry.additionalinformation2.monthlyallowance.label }}</p>
+									{% endif %}
+								</div>
+
+
+						</div>
+						<div class = "bluebreak"> </div>
+					</div>
+				</div>
+
+	</div>
 </section>
 
 <!--------------------------------------------------------------------------->
-<section>
+<section class = "section">
 
 	<div class = "container">
 		<div class = "columns">
-			<div class = "column">
-					<div class = "break"></div>
-							<!--Conditions of eligbility -->
+			<div class = "column is-offset-1 is-8">
+
+<!--------------------------------------------------------------------------->
+							<!-- Conditions of eligibility -->
 							{% if entry.conditionseligibility %}
-							<h3 class = "title">Conditions of Eligibility</h3>
+							<h3 class = "text style-1">Conditions of Eligibility</h3>
 							<p>	{{ entry.conditionseligibility }} </p>
 							{% endif %}
 
-							<div class = "break"> </div>
+							<!-- break--->
+							<div class = "bluebreak"> </div>
+
+			</div>
+		</div>
+</div>
+
+
+<section class = "section">
+
+	<div class = "container">
+		<div class = "columns">
+			<div class = "column is-offset-1 is-8">
+
+
+<!--------------------------------------------------------------------------->
+							<!-- Requirements -->
 							{% if entry.requirements %}
-							<h3 class = "title">Requirements</h3>
+							<h3 class = "text style-1">Requirements</h3>
 								{{ entry.requirements }}
 							{% endif %}
+							<!-- break--->
+							<div class = "bluebreak"> </div>
+
+			</div>
+		</div>
 </div>
+<!--------------------------------------------------------------------------->
+	<!-- Contact -->
+<div class = "container">
+		<div class = "columns">
+			<div class = "column is-offset-1 is-8">
+					<h3 class = "text style-1"> Contact</h3>
+
+			</div>
+		</div>
+
+		<div class = "columns">
+			<div class = "column">
+				<div class = "columns">
+		<!-- Address & telephone -->
+		<div class = "column is-offset-1 is-2">
+
+		{% if entry.university|length %}
+		{% for university in entry.university %}
+
+
+		<div class = "googleAddress">{{ university.contact.mapaddress.address }} </div><br/>
+		<p> Tel <a>{{ university.contact.telephone }}</a> </p>
+			<p> Email <a>{{ university.contact.email }}</a> </p>
+
+		{% endfor %}
+		{% endif %}
+		</div>
+
+		<!-- Map -->
+		<div class = "column is-6">
+		<div id="map"></div>
+		</div>
+	</div>
+</div>
+		</div>
+		<!-- break--->
+		<div class = "blankbreak"></div>
 </div>
 
-<div class = "break"> </div>
-<div class = "columns">
-<div class = "column is-4">
-	{% if entry.university|length %}
-	{% for university in entry.university %}
-	<h3 class = "title"> Contact {{university.title}} </h3>
-
-	<div class = "googleAddress">{{ university.contact.mapaddress.address }} </div><br/>
-
-	<a>{{ university.contact.telephone }}</a>
-
-
-{% endfor %}
-{% endif %}
-</div>
 
 
 
-<div class = "column is-8">
-
-
-	<div id="map"></div>
-
-
-
-
-</div>
-</div>
-
-</div>
-</div>
-<div class = "blankbreak"></div>
 </section>
 
 <script>
-	var map;
-	function initMap() {
-
-		var latlng = {
-					{% for university in entry.university %}
-			 lat: {{ university.contact.mapaddress.lat }}, lng: {{ university.contact.mapaddress.lng }}
-			 		{% endfor %}
-		  }
-
-
-		map = new google.maps.Map(document.getElementById('map'), {
-			center: latlng,
-			zoom: 16,
-			disableDefaultUI: true
-		});
-
-		var marker = new google.maps.Marker({
-          position: latlng,
-          map: map
-        });
-	}
 
 
 
-	var txt = document.getElementsByClassName('googleAddress')[0].innerHTML;
+			var map;
+			function initMap() {
 
-	txt = txt.replace(/\,/g, '</br>');
-	txt = txt.replace(/\-/g, '</br>');
+				var latlng = {
+							{% for university in entry.university %}
+					 lat: {{ university.contact.mapaddress.lat }}, lng: {{ university.contact.mapaddress.lng }}
+					 		{% endfor %}
+				  }
 
-	document.getElementsByClassName('googleAddress')[0].innerHTML = txt;
+
+				map = new google.maps.Map(document.getElementById('map'), {
+					center: latlng,
+					zoom: 12,
+					disableDefaultUI: false
+				});
+
+				var marker = new google.maps.Marker({
+		          position: latlng,
+		          map: map
+		        });
+			}
+
+
+
+			var txt = document.getElementsByClassName('googleAddress')[0].innerHTML;
+
+			txt = txt.replace(/\,/g, '</br> </br>');
+			txt = txt.replace(/\-/g, '</br> </br>');
+
+			document.getElementsByClassName('googleAddress')[0].innerHTML = txt;
+
+
+
+
+
 
 </script>
 
